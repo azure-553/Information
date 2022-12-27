@@ -5,6 +5,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity 
 import json
 
+
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -23,13 +24,13 @@ with tab1:
 with tab2:
     st.header("입학 안내")
 with tab3:
-    st.header("문의 - 051")
+    st.header("문의 - 051-971-2153")
     
 st.sidebar.header('About')
 st.sidebar.markdown('[BSSM 사이트 바로가기](https://school.busanedu.net/bssm-h/main.do)')
-
-st.sidebar.header('About')
-st.sidebar.markdown('[BSSM 사이트 바로가기](https://school.busanedu.net/bssm-h/main.do)')
+st.sidebar.markdown('[BSSM지원 사이트 바로가기](http://bssm.kro.kr/)')
+st.sidebar.markdown('[BSSM Instagram](https://www.instagram.com/bssm.hs/)')
+st.sidebar.markdown('[BSSM Facebook](https://www.facebook.com/BusanSoftwareMeisterHighschool/)')
 
 
 # 채팅 폼
@@ -78,11 +79,31 @@ for i in range(len(st.session_state['past'])):
     #     message(st.session_state['generated'][i],key=str(i)+'_bot')
     st.markdown(
     """
-    <div class="msg right-msg">
-        <div class="msg-img">
-        {0}
+    <div class="message">
+        <div class="message__outer">
+            <div class="message__status">
+                <span class="avatar"></span>
+            </div>
+            <div class="message__inner">
+                <div class="message__bubble" dir="auto">{0}</div>
+                <div class="message__actions">
+                    <ul class="menu"></ul>
+                </div>
+                <div class="message__spacer"></div>
+            </div>
+            <div class="message__status"></div>
         </div>
-    <div class="msg left-msg">
-        {1}
+        <div class="message__outer">
+            <div class="message__avatar"></div>
+            <div class="message__inner">
+                <div class="message__actions">
+                    <ul class="menu"></ul>
+                </div>
+                <div class="message__spacer"></div>
+                <div class="message__bubble2">{1}</div>
+            </div>
+            <div class="message__avatar">
+            </div>
+        </div>
     </div>
-    """.format(st.session_state['past'][i], st.session_state['generated'][i]), unsafe_allow_html=True)
+""".format(st.session_state['past'][i], st.session_state['generated'][i]), unsafe_allow_html=True)
