@@ -83,6 +83,6 @@ for i in range(len(st.session_state['past'])):
         {0}
         </div>
     <div class="msg left-msg">
-    {1}
+        {1}
     </div>
     """.format(st.session_state['past'][i], st.session_state['generated'][i]), unsafe_allow_html=True)
