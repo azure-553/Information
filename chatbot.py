@@ -24,6 +24,7 @@ with tab1:
     st.video("https://www.youtube.com/watch?v=qkDBUiAV_Pk", start_time=2)
 with tab2:
     st.header("입학 안내")
+    st.info("지금은 원서 접수 기간이 아닙니다!")
     
 st.sidebar.header('About')
 st.sidebar.markdown('[BSSM 사이트 바로가기](https://school.busanedu.net/bssm-h/main.do)')
@@ -47,7 +48,7 @@ model = cached_model()
 df = get_dataset()
 
 with tab3:
-    st.header("문의 - 051-971-2153")
+    st.header("문의")
     # 채팅 폼
     with st.form('form',clear_on_submit = True):
         user_input = st.text_input('질문 : ','')
