@@ -29,7 +29,9 @@ with tab2:
 st.sidebar.header('About')
 st.sidebar.markdown('[BSSM 사이트 바로가기](https://school.busanedu.net/bssm-h/main.do)')
 st.sidebar.markdown('[BSSM지원 사이트 바로가기](http://bssm.kro.kr/)')
+st.sidebar.markdown('[BSSM 대나무숲](https://bsmboo.kro.kr/)')
 st.sidebar.markdown('[BSSM Instagram](https://www.instagram.com/bssm.hs/)')
+st.sidebar.markdown('[BSSM 학생회 Instagram](https://www.instagram.com/bssm.government/)')
 st.sidebar.markdown('[BSSM Facebook](https://www.facebook.com/BusanSoftwareMeisterHighschool/)')
 
 
