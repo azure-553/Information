@@ -21,10 +21,9 @@ tab1,tab2,tab3 = st.tabs(["학교 소개","입학안내","문의"])
 
 with tab1:
     st.header("저희 소마고를 소개합니다")
+    st.video("https://www.youtube.com/watch?v=qkDBUiAV_Pk", start_time=2)
 with tab2:
     st.header("입학 안내")
-with tab3:
-    st.header("문의 - 051-971-2153")
     
 st.sidebar.header('About')
 st.sidebar.markdown('[BSSM 사이트 바로가기](https://school.busanedu.net/bssm-h/main.do)')
@@ -32,11 +31,6 @@ st.sidebar.markdown('[BSSM지원 사이트 바로가기](http://bssm.kro.kr/)')
 st.sidebar.markdown('[BSSM Instagram](https://www.instagram.com/bssm.hs/)')
 st.sidebar.markdown('[BSSM Facebook](https://www.facebook.com/BusanSoftwareMeisterHighschool/)')
 
-
-# 채팅 폼
-with st.form('form',clear_on_submit = True):
-    user_input = st.text_input('질문 : ','')
-    submitted = st.form_submit_button('전송')
 
 @st.cache(allow_output_mutation=True)
 def cached_model():
@@ -52,58 +46,65 @@ def get_dataset():
 model = cached_model()
 df = get_dataset()
 
-# 응답
-if 'generated' not in st.session_state:
-    st.session_state['generated'] = []
+with tab3:
+    st.header("문의 - 051-971-2153")
+    # 채팅 폼
+    with st.form('form',clear_on_submit = True):
+        user_input = st.text_input('질문 : ','')
+        submitted = st.form_submit_button('전송')
 
-# 사용자 질문
-if 'past' not in st.session_state:
-    st.session_state['past'] = []
+        # 응답
+    if 'generated' not in st.session_state:
+        st.session_state['generated'] = []
 
-# 예회처리
-if submitted and user_input:
-    embedding = model.encode(user_input)
+    # 사용자 질문
+    if 'past' not in st.session_state:
+        st.session_state['past'] = []
 
-    df['distance'] = df['embedding'].map(lambda x: cosine_similarity([embedding],[x]).squeeze())
-    answer = df.loc[df['distance'].idxmax()]
+    # 예회처리
+    if submitted and user_input:
+        embedding = model.encode(user_input)
 
-    st.session_state.past.append(user_input)
-    if answer['distance'] > 0.5:
-        st.session_state.generated.append(answer['챗봇'])
-    else:
-        st.session_state.generated.append("잘 모르겠습니다. 더 자세한 문의는 입학 문의처로 해주세요")
+        df['distance'] = df['embedding'].map(lambda x: cosine_similarity([embedding],[x]).squeeze())
+        answer = df.loc[df['distance'].idxmax()]
 
-for i in range(len(st.session_state['past'])):
-    # message(st.session_state['past'][i],is_user=True,key=str(i) + '_user')
-    # if len(st.session_state['generated']) > i:
-    #     message(st.session_state['generated'][i],key=str(i)+'_bot')
-    st.markdown(
-    """
-    <div class="message">
-        <div class="message__outer">
-            <div class="message__status">
-                <span class="avatar"></span>
-            </div>
-            <div class="message__inner">
-                <div class="message__bubble" dir="auto">{0}</div>
-                <div class="message__actions">
-                    <ul class="menu"></ul>
+        st.session_state.past.append(user_input)
+        if answer['distance'] > 0.5:
+            st.session_state.generated.append(answer['챗봇'])
+        else:
+            st.session_state.generated.append("잘 모르겠습니다. 더 자세한 문의는 입학 문의처로 해주세요")
+
+    for i in range(len(st.session_state['past'])):
+        # message(st.session_state['past'][i],is_user=True,key=str(i) + '_user')
+        # if len(st.session_state['generated']) > i:
+        #     message(st.session_state['generated'][i],key=str(i)+'_bot')
+        st.markdown(
+        """
+        <div class="message">
+            <div class="message__outer">
+                <div class="message__status">
+                    <span class="avatar"></span>
                 </div>
-                <div class="message__spacer"></div>
-            </div>
-            <div class="message__status"></div>
-        </div>
-        <div class="message__outer">
-            <div class="message__avatar"></div>
-            <div class="message__inner">
-                <div class="message__actions">
-                    <ul class="menu"></ul>
+                <div class="message__inner">
+                    <div class="message__bubble" dir="auto">{0}</div>
+                    <div class="message__actions">
+                        <ul class="menu"></ul>
+                    </div>
+                    <div class="message__spacer"></div>
                 </div>
-                <div class="message__spacer"></div>
-                <div class="message__bubble2">{1}</div>
+                <div class="message__status"></div>
             </div>
-            <div class="message__avatar">
+            <div class="message__outer">
+                <div class="message__avatar"></div>
+                <div class="message__inner">
+                    <div class="message__actions">
+                        <ul class="menu"></ul>
+                    </div>
+                    <div class="message__spacer"></div>
+                    <div class="message__bubble2">{1}</div>
+                </div>
+                <div class="message__avatar">
+                </div>
             </div>
         </div>
-    </div>
-""".format(st.session_state['past'][i], st.session_state['generated'][i]), unsafe_allow_html=True)
+    """.format(st.session_state['past'][i], st.session_state['generated'][i]), unsafe_allow_html=True)
