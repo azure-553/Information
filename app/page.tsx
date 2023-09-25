@@ -4,10 +4,32 @@ import { useState } from "react";
 
 export default function Home() {
   const [question, setQuestion] = useState<string>("");
+  const [answer, setAnswer] = useState();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setQuestion("");
+
+    try {
+      const response = await fetch("./api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: question }),
+      });
+      const data = await response.json();
+      if (response.status !== 200) {
+        throw (
+          data.error ||
+          new Error(`request failed with status ${response.status}`)
+        );
+      }
+      setAnswer(data.result);
+      setQuestion("");
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
   };
 
   return (
@@ -20,6 +42,7 @@ export default function Home() {
         />
         <button type="submit">질문하기</button>
       </form>
+      <div>{answer}</div>
     </>
   );
 }

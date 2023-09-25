@@ -1,5 +1,14 @@
-const answer = () => {
-  return <div>answer!!</div>;
-};
+"use client";
+import { useState } from "react";
 
-export default answer;
+import React from "react";
+
+export default function Answer() {
+  const [answer, setAnswer] = useState();
+  return (
+    <>
+      <h1>answer</h1>
+      <div>{answer}</div>
+    </>
+  );
+}
