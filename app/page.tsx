@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>링클립</h1>
+      <h1 className="text-my-color">링클립</h1>
       <h1 className="text-3xl font-bold underline text-cyan-500">
         Hello world!
       </h1>
