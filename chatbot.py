@@ -13,26 +13,26 @@ def local_css(file_name):
 local_css("style.css")
 
 # 챗봇 UI 설계
-st.title('부산 소프트웨어마이스터 고등학교 🏫')
-st.subheader('홍보 및 입학 안내 챗봇:)')
-st.write('안녕하세요, 부산 소프트웨어 마이스터 고등학교 입학 안내 챗봇입니다. 궁금한것에 대해 문의해주세요!')
+st.title('미디어 리터러시 분석하기 🤖')
+st.subheader('미디어 리터러시에 대한 올바른 지식 쌓기')
+st.write('안녕하세요, 미디어 리터러시를 위해 뉴스 기사를 알기 윕게 요약해주는 챗봇입니다. 궁금한것에 대해 문의해주세요!')
 
-tab1,tab2,tab3 = st.tabs(["학교 소개","입학안내","문의"])
+tab1,tab2,tab3 = st.tabs(["미디어 리터러시 소개","미디어 리터러시 퀴즈","기사 분석"])
 
 with tab1:
-    st.header("저희 소마고를 소개합니다")
-    st.video("https://www.youtube.com/watch?v=qkDBUiAV_Pk", start_time=2)
+    st.header("미디어 리터러시란")
+    st.video("https://zrr.kr/PrVl", start_time=2)
 with tab2:
-    st.header("입학 안내")
-    st.info("지금은 원서 접수 기간이 아닙니다!")
+    st.header("미디어 리터러시 퀴즈")
+    st.info("카훗으로 이동해주세요!")
     
-st.sidebar.header('About')
-st.sidebar.markdown('[BSSM 사이트 바로가기](https://school.busanedu.net/bssm-h/main.do)')
-st.sidebar.markdown('[BSSM지원 사이트 바로가기](http://bssm.kro.kr/)')
-st.sidebar.markdown('[BSSM 대나무숲](https://bsmboo.kro.kr/)')
-st.sidebar.markdown('[BSSM Instagram](https://www.instagram.com/bssm.hs/)')
-st.sidebar.markdown('[BSSM 학생회 Instagram](https://www.instagram.com/bssm.government/)')
-st.sidebar.markdown('[BSSM Facebook](https://www.facebook.com/BusanSoftwareMeisterHighschool/)')
+st.sidebar.header('미디어 리터러시에 관심있다면?')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
 
 
 @st.cache(allow_output_mutation=True)
@@ -50,7 +50,7 @@ model = cached_model()
 df = get_dataset()
 
 with tab3:
-    st.header("문의")
+    st.header("분석")
     # 채팅 폼
     with st.form('form',clear_on_submit = True):
         user_input = st.text_input('질문 : ','')
@@ -75,7 +75,7 @@ with tab3:
         if answer['distance'] > 0.5:
             st.session_state.generated.append(answer['챗봇'])
         else:
-            st.session_state.generated.append("잘 모르겠습니다. 더 자세한 문의는 입학 문의처로 해주세요")
+            st.session_state.generated.append("잘 모르겠습니다. 더 자세한 분석은 추후에 진행됩니다.")
 
     for i in range(len(st.session_state['past'])):
         # message(st.session_state['past'][i],is_user=True,key=str(i) + '_user')
